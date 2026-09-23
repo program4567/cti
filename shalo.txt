@@ -1,0 +1,60 @@
+SHORTENED MALWARE ANALYSIS ALGORITHMS
+
+1. MALWARE TYPE IDENTIFICATION
+Aim: Identify malware type from observed behavior.
+
+Algorithm:
+1. Start the program.
+2. Create a dictionary of malware names and types.
+3. Create a list of malware samples.
+4. Read each sample and search the dictionary.
+5. Display the identified type; if not found, display “Unknown Malware – Requires Further Analysis.”
+6. Stop the program.
+
+
+2. STATIC MALWARE ANALYSIS
+Aim: Extract hashes, metadata and embedded text without executing the file.
+
+Algorithm:
+1. Start the terminal and set the target and report filenames.
+2. Check whether the target exists; create a mock file if needed.
+3. Read the file bytes and calculate MD5 and SHA-256 hashes.
+4. Extract printable strings (4+ characters) using regular expressions.
+5. Write file size, hashes and strings to the report.
+6. End the program.
+
+
+3. DYNAMIC MALWARE ANALYSIS
+Aim: Run a suspicious program safely and identify newly opened programs.
+
+Algorithm:
+1. Choose the test file, report file and monitoring time.
+2. Check the file; create a harmless test file if needed.
+3. Record the currently running programs.
+4. Run the suspicious file in the background.
+5. Monitor periodically for newly appearing programs.
+6. Record new programs, stop the test when the timer ends, and save the report.
+
+
+4. NETWORK MALWARE ANALYSIS
+Aim: Analyze malware communication using Wireshark.
+
+Algorithm:
+1. Open the malware network capture in Wireshark.
+2. Observe packets and identify the infected system’s source IP.
+3. Check destination IPs, ports, DNS requests and protocols.
+4. Look for repeated connections and unusual ports/protocols.
+5. Record suspicious IPs, domains, ports and packet counts.
+6. Determine the possible network behavior.
+
+
+5. MALWARE DETECTION
+Aim: Detect malware using hashes and basic threat indicators.
+
+Algorithm:
+1. Start the program and enter the filename.
+2. Check whether the file exists.
+3. Calculate its SHA-256 hash and compare it with known malicious hashes.
+4. Check the file extension and suspicious characteristics.
+5. Classify it as Malware, Suspicious, or Safe.
+6. Display the result and stop.
