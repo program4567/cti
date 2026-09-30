@@ -1,0 +1,227 @@
+CYBER THREAT INTELLIGENCE (CTI) PROJECT
+Corrected Exam Programs
+==========================================
+
+1. CYBER THREAT CLASSIFICATION
+--------------------------------
+
+events = ["failed login", "high traffic", "malicious attachment",
+          "fake email", "normal browsing"]
+
+for e in events:
+    if "failed" in e:
+        t = "Unauthorized Access"
+    elif "traffic" in e:
+        t = "DoS"
+    elif "attachment" in e:
+        t = "Malware"
+    elif "email" in e:
+        t = "Phishing"
+    else:
+        t = "Normal"
+
+    print(e, ":", t)
+
+
+2. WEB APPLICATION ATTACK VECTOR ANALYSIS
+------------------------------------------
+
+events = ["SQL", "script", "login", "upload", "normal"]
+
+for e in events:
+    if "SQL" in e:
+        t = "SQL Injection"
+    elif "script" in e:
+        t = "XSS"
+    elif "login" in e:
+        t = "Brute Force"
+    elif "upload" in e:
+        t = "File Upload Attack"
+    else:
+        t = "No Threat"
+
+    print(e, "->", t)
+
+
+3. NETWORK THREAT DETECTION USING PYSHARK
+-----------------------------------------
+
+import pyshark
+
+capture = pyshark.FileCapture("capture.pcapng")
+
+syn = 0
+icmp = 0
+ports = set()
+
+for p in capture:
+    try:
+        if 'TCP' in p:
+            if p.tcp.flags_syn == '1' and p.tcp.flags_ack == '0':
+                syn += 1
+                ports.add(p.tcp.dstport)
+
+        if 'ICMP' in p:
+            icmp += 1
+    except:
+        pass
+
+capture.close()
+
+print("SYN Packets:", syn)
+print("ICMP Packets:", icmp)
+print("Ports:", len(ports))
+
+if syn > 20:
+    print("Possible SYN Flood")
+
+if len(ports) > 15:
+    print("Possible Port Scan")
+
+if icmp > 30:
+    print("Possible ICMP Flood")
+
+if syn <= 20 and len(ports) <= 15 and icmp <= 30:
+    print("No major threat")
+
+
+4. OSINT THREAT INTELLIGENCE COLLECTION
+---------------------------------------
+
+import subprocess
+
+domain = input("Enter domain: ")
+
+print("\nWHOIS Information:")
+subprocess.run(["whois", domain])
+
+print("\nDNS Information:")
+subprocess.run(["dig", domain])
+
+print("OSINT Collection Completed")
+
+
+5. CYBER KILL CHAIN MODEL
+--------------------------
+
+kc = {
+    "Scanning": "Reconnaissance",
+    "Phishing": "Delivery",
+    "Exploit": "Exploitation",
+    "Malware": "Installation",
+    "C2": "Command and Control",
+    "Exfiltration": "Actions on Objectives"
+}
+
+events = ["Scanning", "Phishing", "Exploit", "Malware", "C2", "Exfiltration"]
+
+for e in events:
+    print(e, "->", kc.get(e, "Unknown"))
+
+
+6. MALWARE ANALYSIS / CLASSIFICATION
+-------------------------------------
+
+db = {
+    "WannaCry": "Ransomware",
+    "Zeus": "Trojan",
+    "Mirai": "Botnet"
+}
+
+samples = ["WannaCry", "Zeus", "Mirai"]
+
+for s in samples:
+    print(s, "->", db.get(s, "Unknown"))
+
+
+7. STATIC MALWARE ANALYSIS
+--------------------------
+
+import hashlib
+import re
+
+file = "suspicious_sample.bin"
+
+with open(file, "rb") as f:
+    data = f.read()
+
+md5 = hashlib.md5(data).hexdigest()
+sha256 = hashlib.sha256(data).hexdigest()
+strings = re.findall(b"[ -~]{4,}", data)
+
+print("File Size:", len(data))
+print("MD5:", md5)
+print("SHA256:", sha256)
+
+print("\nStrings Found:")
+for s in strings:
+    print(s.decode())
+
+
+8. SANDBOX / PROCESS MONITORING
+-------------------------------
+
+import subprocess
+import psutil
+import time
+
+file = "suspicious_payload.exe"
+
+before = {p.pid for p in psutil.process_iter()}
+
+subprocess.Popen(file, shell=True)
+
+time.sleep(5)
+
+print("New Processes:")
+
+for p in psutil.process_iter(["pid", "name"]):
+    if p.pid not in before:
+        print("New Process:", p.info["name"])
+
+print("Sandbox analysis completed.")
+
+
+9. NETWORK BEHAVIOR ANALYSIS
+----------------------------
+
+import csv
+from collections import Counter
+
+ips = Counter()
+ports = Counter()
+protocols = Counter()
+
+with open("malware_traffic.csv") as f:
+    for row in csv.DictReader(f):
+        ips[row["Destination"]] += 1
+        ports[row["Destination Port"]] += 1
+        protocols[row["Protocol"]] += 1
+
+print("IPs:", ips.most_common(5))
+print("Ports:", ports.most_common(5))
+print("Protocols:", protocols)
+
+
+10. HASH-BASED MALWARE DETECTION
+--------------------------------
+
+import hashlib
+
+file = input("Enter file: ")
+
+with open(file, "rb") as f:
+    data = f.read()
+
+h = hashlib.sha256(data).hexdigest()
+
+print("SHA-256 Hash:", h)
+
+# Use a SHA-256 malware hash here.
+malware_hash = "PUT_KNOWN_SHA256_HASH_HERE"
+
+if h == malware_hash:
+    print("MALWARE DETECTED")
+else:
+    print("No known malware found")
+
